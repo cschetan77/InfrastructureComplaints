@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public void login(View view) {
         EditText text_email = (EditText) findViewById(R.id.text_email);
         String email = text_email.getText().toString();
-        EditText text_password = (EditText) findViewById(R.id.text_password);
+        EditText text_password = (EditText) findViewById(R.id.text_newpassword);
         final String password = text_password.getText().toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

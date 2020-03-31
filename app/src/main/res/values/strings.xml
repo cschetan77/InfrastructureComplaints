@@ -2,7 +2,13 @@
     <string name="app_name">InfrastructureComplaints</string>
     <string name="text_email">Email</string>
     <string name="text_password">Password</string>
+
     <string name="button_login">Login</string>
     <string name="button_signup">Sign Up</string>
     <string name="text_signup">Don\'t have an account</string>
+    <string name="text_name">Name</string>
+    <string name="text_newpassword">New Password</string>
+    <string name="text_dob">DD-MM-YYYY</string>
+    <string name="text_contact">Contact No.</string>
+    <string name="button_register">Sign Up</string>
 </resources>
