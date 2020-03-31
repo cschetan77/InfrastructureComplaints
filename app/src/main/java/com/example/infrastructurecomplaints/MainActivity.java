@@ -20,6 +20,6 @@ public class MainActivity extends AppCompatActivity {
         String email = text_email.getText().toString();
         text_password = (EditText)findViewById(R.id.text_password);
         String password = text_password.getText().toString();
-        
+
     }
 }

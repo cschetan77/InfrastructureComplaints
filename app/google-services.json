@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "960381910668",
+    "firebase_url": "https://nitc-infrastructure-complaints.firebaseio.com",
+    "project_id": "nitc-infrastructure-complaints",
+    "storage_bucket": "nitc-infrastructure-complaints.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960381910668:android:53e919d7db46a2340385a9",
+        "android_client_info": {
+          "package_name": "com.example.infrastructurecomplaints"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960381910668-u4tdovjntfg1mubaogn1ijo0g715fbbe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAHkQueTCS9z4alZEy_ZDtBghzADKE9PE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960381910668-u4tdovjntfg1mubaogn1ijo0g715fbbe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
