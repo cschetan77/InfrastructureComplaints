@@ -1,14 +1,19 @@
 package com.example.infrastructurecomplaints;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText text_email,text_password;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,10 +21,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        text_email = (EditText)findViewById(R.id.text_email);
+        EditText text_email = (EditText) findViewById(R.id.text_email);
         String email = text_email.getText().toString();
-        text_password = (EditText)findViewById(R.id.text_password);
+        EditText text_password = (EditText) findViewById(R.id.text_password);
         String password = text_password.getText().toString();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()) {
+                        //Record Exist and check for password and start application
+                        Toast.makeText(MainActivity.this,"User found",Toast.LENGTH_SHORT).show();
 
+                    }
+                    else {
+                        //Record don't exist
+                        Toast.makeText(MainActivity.this,"User not found",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    //Query not Completed Guess network problem
+                    Toast.makeText(MainActivity.this,"Query not completed",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
