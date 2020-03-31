@@ -3,6 +3,7 @@ package com.example.infrastructurecomplaints;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         EditText text_email = (EditText) findViewById(R.id.text_email);
         String email = text_email.getText().toString();
         EditText text_password = (EditText) findViewById(R.id.text_password);
-        String password = text_password.getText().toString();
+        final String password = text_password.getText().toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -32,9 +33,17 @@ public class MainActivity extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()) {
-                        //Record Exist and check for password and start application
+                        //Record Exist and check for password
                         Toast.makeText(MainActivity.this,"User found",Toast.LENGTH_SHORT).show();
-
+                        if(password.equals(document.get("Password"))) {
+                            //Correct password start Main Application
+                            Toast.makeText(MainActivity.this,"User found and password matched",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MainActivity.this,DummyActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(MainActivity.this,"Wrong password",Toast.LENGTH_SHORT).show();
+                        }
                     }
                     else {
                         //Record don't exist
@@ -47,5 +56,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void signup(View view) {
+        Intent intent = new Intent(this,RegistrationActivity.class);
+        startActivity(intent);
     }
 }
