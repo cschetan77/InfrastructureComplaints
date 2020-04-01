@@ -35,6 +35,7 @@ public class RegistrationActivity extends AppCompatActivity {
         String password = text_password.getText().toString();
         String dob = text_dob.getText().toString();
         String contact = text_contact.getText().toString();
+        
 
         Map<String,Object> user = new HashMap<>();
         user.put("Name",name);
