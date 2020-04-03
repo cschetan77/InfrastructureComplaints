@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -55,7 +57,7 @@ public class ListComplaints extends AppCompatActivity {
 
                     Toast.makeText(ListComplaints.this, "Fetching Successfull", Toast.LENGTH_SHORT).show();
 
-                    //Working absolutely fine
+                    //Working absolutely fine but after this for diaplaying taking too much time 
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String subject = (String) document.get("Subject");
                         subjects.add(subject);
@@ -76,5 +78,9 @@ public class ListComplaints extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
 
+    }
+
+    public void createComplaint(View view) {
+        Toast.makeText(this, "Button Pressed", Toast.LENGTH_SHORT).show();
     }
 }
