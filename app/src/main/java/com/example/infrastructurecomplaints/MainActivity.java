@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                         if(password.equals(document.get("Password"))) {
                             //Correct password start Main Application
                             Toast.makeText(MainActivity.this,"User found and password matched",Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this,DummyActivity.class);
+                            Intent intent = new Intent(MainActivity.this,ListComplaints.class);
                             startActivity(intent);
                         }
                         else {

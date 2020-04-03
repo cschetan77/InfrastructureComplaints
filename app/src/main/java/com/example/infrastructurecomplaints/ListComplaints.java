@@ -1,0 +1,81 @@
+package com.example.infrastructurecomplaints;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class ListComplaints extends AppCompatActivity {
+
+    ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1","Person 2","Person 3","Person 4","Person 5", "Person 6", "Person 7","Person 8", "Person 9", "Person 10", "Person 11", "Person 12", "Person 13", "Person 14"));
+
+    private FirebaseFirestore db;
+    ArrayList<Complaints> cmplist;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.Adapter mAdapter;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list_complaints);
+
+
+        //Making a list for complaints
+        cmplist = new ArrayList<Complaints>();
+
+
+
+
+        //Getting data from Firebase
+        db = FirebaseFirestore.getInstance();
+        CollectionReference complaints = db.collection("complaints");
+        complaints.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+
+                    Toast.makeText(ListComplaints.this, "Fetching Successfull", Toast.LENGTH_SHORT).show();
+
+                    //Working absolutely fine
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String subject = (String) document.get("Subject");
+                        String description = (String) document.get("Description");
+                        String user = (String) document.get("User");
+                        Complaints cmp = new Complaints(subject,description,user);
+                        cmplist.add(cmp);
+                    }
+                }
+                else {
+                    Toast.makeText(ListComplaints.this, "Failed to fetch Complaints", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        //Initializing Recyler View
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        MyAdapter mAdapter = new MyAdapter(this,cmplist);
+        recyclerView.setAdapter(mAdapter);
+
+
+    }
+}
