@@ -49,7 +49,7 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()) {
                     Toast.makeText(RegistrationActivity.this,"Account created successfully",Toast.LENGTH_SHORT);
-                    Intent intent = new Intent(RegistrationActivity.this,DummyActivity.class);
+                    Intent intent = new Intent(RegistrationActivity.this,MainActivity.class);
                     startActivity(intent);
                 }
                 else {
