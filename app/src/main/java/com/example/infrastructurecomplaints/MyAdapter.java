@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.zip.Inflater;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    ArrayList<Complaints> cmplist;
+    ArrayList<String> cmplist;
     Context context;
-    public MyAdapter(Context context,ArrayList<Complaints> cmplist) {
+    public MyAdapter(Context context,ArrayList<String> cmplist) {
         this.context = context;
         this.cmplist = cmplist;
     }
@@ -32,7 +32,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
 
-        holder.text_subject.setText(cmplist.get(position).subject);
+        holder.text_subject.setText(cmplist.get(position));
     }
 
     @Override

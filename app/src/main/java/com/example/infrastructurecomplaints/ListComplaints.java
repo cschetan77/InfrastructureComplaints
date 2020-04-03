@@ -41,6 +41,8 @@ public class ListComplaints extends AppCompatActivity {
         cmplist = new ArrayList<Complaints>();
 
 
+        //Array List of strings
+        final ArrayList<String> subjects = new ArrayList<>();
 
 
         //Getting data from Firebase
@@ -56,10 +58,7 @@ public class ListComplaints extends AppCompatActivity {
                     //Working absolutely fine
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String subject = (String) document.get("Subject");
-                        String description = (String) document.get("Description");
-                        String user = (String) document.get("User");
-                        Complaints cmp = new Complaints(subject,description,user);
-                        cmplist.add(cmp);
+                        subjects.add(subject);
                     }
                 }
                 else {
@@ -73,7 +72,7 @@ public class ListComplaints extends AppCompatActivity {
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        MyAdapter mAdapter = new MyAdapter(this,cmplist);
+        MyAdapter mAdapter = new MyAdapter(this,subjects);
         recyclerView.setAdapter(mAdapter);
 
 
