@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(View view) {
         EditText text_email = (EditText) findViewById(R.id.text_email);
-        String email = text_email.getText().toString();
+        final String email = text_email.getText().toString();
         EditText text_password = (EditText) findViewById(R.id.text_newpassword);
         final String password = text_password.getText().toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                             //Correct password start Main Application
                             Toast.makeText(MainActivity.this,"User found and password matched",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(MainActivity.this,ListComplaints.class);
+                            intent = intent.putExtra("Email", email);
                             startActivity(intent);
                         }
                         else {

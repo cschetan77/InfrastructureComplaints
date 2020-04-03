@@ -1,0 +1,71 @@
+package com.example.infrastructurecomplaints;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class CreateComplaint extends AppCompatActivity {
+
+    private FirebaseFirestore db;
+    private EditText sub,des;
+    String email;
+    private Map<String,Object> data = new HashMap<>();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_complaint);
+        sub = (EditText)findViewById(R.id.text_subject);
+        des = (EditText)findViewById(R.id.text_description);
+
+        Intent intent = getIntent();
+        email = intent.getStringExtra("Email");
+        //Getting databse instance
+        db = FirebaseFirestore.getInstance();
+
+
+    }
+
+    public void create(View view) {
+
+
+        data.put("User",email);
+        data.put("Subject",sub.getText().toString());
+        data.put("Description",des.getText().toString());
+        Toast.makeText(this, sub.getText().toString(), Toast.LENGTH_SHORT).show();
+        data.put("Feedback","");
+        data.put("Image","url://");
+        data.put("Priority","Not Specified");
+        data.put("Status","Pending");
+        data.put("Type","Not Specified");
+
+
+
+        db.collection("complaints").add(data).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if(task.isSuccessful()) {
+                    Toast.makeText(CreateComplaint.this, "Complaint Lodged successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CreateComplaint.this,ListComplaints.class);
+                    intent.putExtra("Email",email);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(CreateComplaint.this, "Something gone wrong", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+}

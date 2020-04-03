@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -28,8 +29,11 @@ public class ListComplaints extends AppCompatActivity {
 
     ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1","Person 2","Person 3","Person 4","Person 5", "Person 6", "Person 7","Person 8", "Person 9", "Person 10", "Person 11", "Person 12", "Person 13", "Person 14"));
 
+    String email;
     private FirebaseFirestore db;
-    ArrayList<Complaints> cmplist;
+
+    //Making a list for complaints
+    ArrayList<Complaints> cmplist = new ArrayList<Complaints>();
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -38,10 +42,16 @@ public class ListComplaints extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_complaints);
 
+        //Getting Intent extra infromation i.e user email
+        Intent intent = getIntent();
+        email = intent.getStringExtra("Email");
+        Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
 
-        //Making a list for complaints
-        cmplist = new ArrayList<Complaints>();
 
+        //Initialize Recycler view
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
         //Array List of strings
         final ArrayList<String> subjects = new ArrayList<>();
@@ -57,11 +67,14 @@ public class ListComplaints extends AppCompatActivity {
 
                     Toast.makeText(ListComplaints.this, "Fetching Successfull", Toast.LENGTH_SHORT).show();
 
-                    //Working absolutely fine but after this for diaplaying taking too much time 
+                    //Working absolutely fine but after this for diaplaying taking too much time
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String subject = (String) document.get("Subject");
                         subjects.add(subject);
                     }
+                    //Initializing Adapter
+                    mAdapter = new MyAdapter(ListComplaints.this,subjects);
+                    recyclerView.setAdapter(mAdapter);
                 }
                 else {
                     Toast.makeText(ListComplaints.this, "Failed to fetch Complaints", Toast.LENGTH_SHORT).show();
@@ -70,17 +83,17 @@ public class ListComplaints extends AppCompatActivity {
         });
 
 
-        //Initializing Recyler View
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        MyAdapter mAdapter = new MyAdapter(this,subjects);
-        recyclerView.setAdapter(mAdapter);
+
+
+
+
 
 
     }
 
     public void createComplaint(View view) {
-        Toast.makeText(this, "Button Pressed", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this,CreateComplaint.class);
+        intent.putExtra("Email",email);
+        startActivity(intent);
     }
 }
