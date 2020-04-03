@@ -13,5 +13,4 @@
     <string name="button_register">Sign Up</string>
     <string name="text_subject">Subject</string>
     <string name="text_user">User</string>
-    <string name="text_description">Description</string>
 </resources>
