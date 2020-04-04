@@ -15,17 +15,30 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
+    private SharedPrefrencesConfig prefrencesConfig;
+    EditText text_email;
+    EditText text_password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        prefrencesConfig = new SharedPrefrencesConfig(getApplicationContext());
+        text_email = (EditText) findViewById(R.id.text_email);
+        text_password = (EditText) findViewById(R.id.text_newpassword);
+
+        if(prefrencesConfig.readLoginStatus()) {
+                startActivity(new Intent(this,ListComplaints.class));
+                finish();
+        }
     }
 
     public void login(View view) {
-        EditText text_email = (EditText) findViewById(R.id.text_email);
+
+        //Getting TextFields
         final String email = text_email.getText().toString();
-        EditText text_password = (EditText) findViewById(R.id.text_newpassword);
         final String password = text_password.getText().toString();
+
+        //Querying from database
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -38,17 +51,27 @@ public class MainActivity extends AppCompatActivity {
                         if(password.equals(document.get("Password"))) {
                             //Correct password start Main Application
                             Toast.makeText(MainActivity.this,"User found and password matched",Toast.LENGTH_SHORT).show();
+
+                            //Setting shared prefrences
+                            prefrencesConfig.writeLoginStatus(true);
+                            prefrencesConfig.writeUserInfo(email);
+
                             Intent intent = new Intent(MainActivity.this,ListComplaints.class);
                             intent = intent.putExtra("Email", email);
                             startActivity(intent);
+                            finish();
                         }
                         else {
                             Toast.makeText(MainActivity.this,"Wrong password",Toast.LENGTH_SHORT).show();
+
+                            text_password.setText("");
                         }
                     }
                     else {
                         //Record don't exist
                         Toast.makeText(MainActivity.this,"User not found",Toast.LENGTH_SHORT).show();
+                        text_email.setText("");
+                        text_password.setText("");
                     }
                 }
                 else {

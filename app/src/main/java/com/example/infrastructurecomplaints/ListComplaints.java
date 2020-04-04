@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class ListComplaints extends AppCompatActivity {
 
-    ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1","Person 2","Person 3","Person 4","Person 5", "Person 6", "Person 7","Person 8", "Person 9", "Person 10", "Person 11", "Person 12", "Person 13", "Person 14"));
+    ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7", "Person 8", "Person 9", "Person 10", "Person 11", "Person 12", "Person 13", "Person 14"));
 
     String email;
     private FirebaseFirestore db;
@@ -37,6 +38,7 @@ public class ListComplaints extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,11 +47,19 @@ public class ListComplaints extends AppCompatActivity {
         //Getting Intent extra infromation i.e user email
         Intent intent = getIntent();
         email = intent.getStringExtra("Email");
+
+
+        //Getting email from saved Shared Prefrences file
+        if (email == null) {
+            SharedPrefrencesConfig prefrencesConfig = new SharedPrefrencesConfig(getApplicationContext());
+            email = prefrencesConfig.readUserInfo();
+            Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
+        }
         Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
 
 
         //Initialize Recycler view
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -63,7 +73,7 @@ public class ListComplaints extends AppCompatActivity {
         complaints.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
 
                     Toast.makeText(ListComplaints.this, "Fetching Successfull", Toast.LENGTH_SHORT).show();
 
@@ -73,27 +83,20 @@ public class ListComplaints extends AppCompatActivity {
                         subjects.add(subject);
                     }
                     //Initializing Adapter
-                    mAdapter = new MyAdapter(ListComplaints.this,subjects);
+                    mAdapter = new MyAdapter(ListComplaints.this, subjects);
                     recyclerView.setAdapter(mAdapter);
-                }
-                else {
+                } else {
                     Toast.makeText(ListComplaints.this, "Failed to fetch Complaints", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
 
-
-
-
-
-
-
     }
 
     public void createComplaint(View view) {
-        Intent intent = new Intent(this,CreateComplaint.class);
-        intent.putExtra("Email",email);
+        Intent intent = new Intent(this, CreateComplaint.class);
+        intent.putExtra("Email", email);
         startActivity(intent);
     }
 }

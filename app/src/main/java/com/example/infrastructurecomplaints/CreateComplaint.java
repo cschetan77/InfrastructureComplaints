@@ -61,6 +61,7 @@ public class CreateComplaint extends AppCompatActivity {
                     Intent intent = new Intent(CreateComplaint.this,ListComplaints.class);
                     intent.putExtra("Email",email);
                     startActivity(intent);
+                    finish();
                 }
                 else {
                     Toast.makeText(CreateComplaint.this, "Something gone wrong", Toast.LENGTH_SHORT).show();
