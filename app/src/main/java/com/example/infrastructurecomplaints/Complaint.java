@@ -36,12 +36,12 @@ public class Complaint extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint);
-        text_subject = (TextView)findViewById(R.id.text_subject);
+        text_subject = (TextView)findViewById(R.id.text_subject_c);
         Intent intent = getIntent();
         String subject = intent.getStringExtra("Subject");
         text_subject.setText(subject);
-        text_description = (TextView)findViewById(R.id.text_description);
-        text_user = (TextView)findViewById(R.id.text_user);
+        text_description = (TextView)findViewById(R.id.text_description_c);
+        text_user = (TextView)findViewById(R.id.text_user_c);
         text_status = (TextView)findViewById(R.id.text_status);
 
         //Getting databse instance

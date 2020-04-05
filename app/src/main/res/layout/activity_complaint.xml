@@ -7,7 +7,7 @@
     tools:context=".Complaint">
 
     <TextView
-        android:id="@+id/text_subject_cc"
+        android:id="@+id/text_subject_c"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -20,30 +20,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_description_cc"
+        android:id="@+id/text_description_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
         android:layout_marginTop="36dp"
         android:text="@string/text_description"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_subject" />
+        app:layout_constraintTop_toBottomOf="@+id/text_subject_c" />
 
     <TextView
-        android:id="@+id/text_description"
+        android:id="@+id/text_description_c"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="92dp"
         android:text="Des"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/text_status_heading"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintHorizontal_bias="0.11"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_description_heading"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/button_feedback"
@@ -109,7 +109,7 @@
         app:layout_constraintStart_toEndOf="@+id/text_status_heading" />
 
     <TextView
-        android:id="@+id/text_user"
+        android:id="@+id/text_user_c"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"

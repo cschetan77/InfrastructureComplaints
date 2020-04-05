@@ -49,7 +49,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            text_subject = (TextView) itemView.findViewById(R.id.text_subject);
+            text_subject = (TextView) itemView.findViewById(R.id.text_subject_ii);
             itemView.setOnClickListener(this);
         }
 
