@@ -2,6 +2,7 @@ package com.example.infrastructurecomplaints;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,13 +29,12 @@ import java.util.List;
 
 public class ListComplaints extends AppCompatActivity {
 
-    ArrayList personNames = new ArrayList<>(Arrays.asList("Person 1", "Person 2", "Person 3", "Person 4", "Person 5", "Person 6", "Person 7", "Person 8", "Person 9", "Person 10", "Person 11", "Person 12", "Person 13", "Person 14"));
 
     String email;
     private FirebaseFirestore db;
 
     //Making a list for complaints
-    ArrayList<Complaints> cmplist = new ArrayList<Complaints>();
+   // ArrayList<Complaints> cmplist = new ArrayList<Complaints>();
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -62,6 +62,8 @@ public class ListComplaints extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         //Array List of strings
         final ArrayList<String> subjects = new ArrayList<>();
