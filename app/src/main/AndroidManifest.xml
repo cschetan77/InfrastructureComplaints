@@ -9,8 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".Complaint" />
+        <activity android:name=".Complaint"></activity>
         <activity android:name=".CreateComplaint" />
         <activity android:name=".ListComplaints" />
         <activity android:name=".DummyActivity" />
