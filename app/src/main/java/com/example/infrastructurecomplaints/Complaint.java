@@ -88,6 +88,6 @@ public class Complaint extends AppCompatActivity {
     //Image display in seprate interface
     public void openImage(View view) {
 
-        
+
     }
 }

@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Feedback"></activity>
+
+        <user-feature android:name="android.hardware.camera2"
+        <activity android:name=".ImageFetch"></activity>
+        <activity android:name=".Feedback" />
         <activity android:name=".Complaint" />
         <activity android:name=".CreateComplaint" />
         <activity android:name=".ListComplaints" />
