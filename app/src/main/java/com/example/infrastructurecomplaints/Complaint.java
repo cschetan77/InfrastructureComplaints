@@ -62,6 +62,7 @@ public class Complaint extends AppCompatActivity {
                     text_description.setText(description);
                     text_status.setText(status);
                     text_user.setText(user);
+                    docId = doc.getId();
 
                 }
                 else {
@@ -77,11 +78,16 @@ public class Complaint extends AppCompatActivity {
 
     //Feedback
     public void feedback(View view) {
+        Intent intent = new Intent(this,Feedback.class);
+        intent.putExtra("ComplaintId",docId);
+
+        startActivity(intent);
     }
 
 
     //Image display in seprate interface
     public void openImage(View view) {
 
+        
     }
 }

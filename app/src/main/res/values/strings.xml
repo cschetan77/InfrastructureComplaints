@@ -20,4 +20,6 @@
     <string name="text_status_heading">Status</string>
     <string name="text_status">stat</string>
     <string name="button_lodge">Lodge</string>
+    <string name="text_feedback_heading">Write Feedback</string>
+    <string name="button_submit_f">Submit Feedback</string>
 </resources>
