@@ -27,8 +27,8 @@ public class CreateComplaint extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_complaint);
-        sub = (EditText)findViewById(R.id.text_subject);
-        des = (EditText)findViewById(R.id.text_description);
+        sub = (EditText)findViewById(R.id.text_subject_cc);
+        des = (EditText)findViewById(R.id.text_description_cc);
 
         Intent intent = getIntent();
         email = intent.getStringExtra("Email");

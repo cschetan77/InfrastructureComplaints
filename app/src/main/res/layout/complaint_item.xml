@@ -10,7 +10,7 @@
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
         android:textSize="20sp"
-        android:id="@+id/text_subject"
+        android:id="@+id/text_subject_cc"
         android:text="ABCD"
         />
 
