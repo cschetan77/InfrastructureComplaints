@@ -1,6 +1,7 @@
 package com.example.infrastructurecomplaints;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,8 @@ import java.util.zip.Inflater;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     ArrayList<String> cmplist;
     Context context;
-    public MyAdapter(Context context,ArrayList<String> cmplist) {
+
+    public MyAdapter(Context context, ArrayList<String> cmplist) {
         this.context = context;
         this.cmplist = cmplist;
     }
@@ -24,7 +26,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.complaint_item,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.complaint_item, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
@@ -41,18 +43,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return cmplist.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView text_subject;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            text_subject = (TextView)itemView.findViewById(R.id.text_subject);
+            text_subject = (TextView) itemView.findViewById(R.id.text_subject);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             Toast.makeText(v.getContext(), "Complaint clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(v.getContext(), Complaint.class);
+            intent.putExtra("Subject", cmplist.get(getAdapterPosition()));
+            v.getContext().startActivity(intent);
+
         }
     }
 }
