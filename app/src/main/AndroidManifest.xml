@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.infrastructurecomplaints">
 
+    <user-feature android:name="android.hardware.camera2"></user-feature>
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <user-feature android:name="android.hardware.camera2"
         <activity android:name=".ImageFetch"></activity>
         <activity android:name=".Feedback" />
         <activity android:name=".Complaint" />
@@ -27,4 +30,7 @@
         </activity>
     </application>
 
+
+
 </manifest>
+
