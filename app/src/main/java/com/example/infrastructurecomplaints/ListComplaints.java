@@ -25,6 +25,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ListComplaints extends AppCompatActivity {
@@ -65,9 +67,9 @@ public class ListComplaints extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        //Array List of strings
-        final ArrayList<String> subjects = new ArrayList<>();
-        final ArrayList<String> dates = new ArrayList<>();
+        //Array List of Complaint Objects
+        final ArrayList<CmpItem> cmps = new ArrayList<>();
+
 
 
         //Getting data from Firebase
@@ -85,12 +87,12 @@ public class ListComplaints extends AppCompatActivity {
                         String subject = (String) document.get("Subject");
                         String date = (String)document.get("Date");
                         String time = (String)document.get("Time");
-                        String date_time = date + "   " + time;
-                        subjects.add(subject);
-                        dates.add(date_time);
+                        CmpItem cmp = new CmpItem(subject,date,time);
+                        cmps.add(cmp);
                     }
                     //Initializing Adapter
-                    mAdapter = new MyAdapter(ListComplaints.this, subjects,dates);
+                    Collections.sort(cmps,new cmpComparator());
+                    mAdapter = new MyAdapter(ListComplaints.this,cmps);
                     recyclerView.setAdapter(mAdapter);
                 } else {
                     Toast.makeText(ListComplaints.this, "Failed to fetch Complaints", Toast.LENGTH_SHORT).show();

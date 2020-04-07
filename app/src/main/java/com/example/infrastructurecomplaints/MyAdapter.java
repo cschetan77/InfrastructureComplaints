@@ -15,14 +15,13 @@ import java.util.ArrayList;
 import java.util.zip.Inflater;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    ArrayList<String> cmplist;
-    ArrayList<String> dates;
+
+    ArrayList<CmpItem> cmps;
     Context context;
 
-    public MyAdapter(Context context, ArrayList<String> cmplist, ArrayList<String> dates) {
+    public MyAdapter(Context context, ArrayList<CmpItem> cmps) {
         this.context = context;
-        this.cmplist = cmplist;
-        this.dates = dates;
+        this.cmps = cmps;
     }
 
     @NonNull
@@ -37,13 +36,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
 
-        holder.text_subject.setText(cmplist.get(position));
-        holder.text_date.setText(dates.get(position));
+        holder.text_subject.setText(cmps.get(position).Subject);
+        holder.text_date.setText(cmps.get(position).Date + " " + cmps.get(position).Time);
     }
 
     @Override
     public int getItemCount() {
-        return cmplist.size();
+        return cmps.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -62,8 +61,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public void onClick(View v) {
             Toast.makeText(v.getContext(), "Complaint clicked", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(v.getContext(), Complaint.class);
-            intent.putExtra("Subject", cmplist.get(getAdapterPosition()));
+            intent.putExtra("Subject", cmps.get(getAdapterPosition()).Subject);
             v.getContext().startActivity(intent);
+            
 
         }
     }
