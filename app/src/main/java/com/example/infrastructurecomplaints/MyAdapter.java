@@ -63,7 +63,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             Intent intent = new Intent(v.getContext(), Complaint.class);
             intent.putExtra("Subject", cmps.get(getAdapterPosition()).Subject);
             v.getContext().startActivity(intent);
-            
+
 
         }
     }

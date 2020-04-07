@@ -58,7 +58,7 @@ public class CreateComplaint extends AppCompatActivity {
 
         //Getting current date and time
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-mm-yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = simpleDateFormat.format(calendar.getTime());
         SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("hh:mm:ss");
         String time = simpleTimeFormat.format(calendar.getTime());

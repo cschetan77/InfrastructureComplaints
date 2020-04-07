@@ -75,7 +75,7 @@ public class ListComplaints extends AppCompatActivity {
         //Getting data from Firebase
         db = FirebaseFirestore.getInstance();
         CollectionReference complaints = db.collection("complaints");
-        complaints.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        complaints.whereEqualTo("User",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
