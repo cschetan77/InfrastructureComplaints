@@ -60,7 +60,7 @@ public class CreateComplaint extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = simpleDateFormat.format(calendar.getTime());
-        SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("HH:mm:ss");
         String time = simpleTimeFormat.format(calendar.getTime());
 
         data.put("Time",time);
