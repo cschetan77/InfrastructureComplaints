@@ -58,12 +58,13 @@ public class CreateComplaint extends AppCompatActivity {
 
         //Getting current date and time
         Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-        String time = simpleDateFormat.format(calendar.getTime());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-mm-yyyy");
+        String date = simpleDateFormat.format(calendar.getTime());
+        SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("hh:mm:ss");
+        String time = simpleTimeFormat.format(calendar.getTime());
 
         data.put("Time",time);
-        data.put("Date",currentDate);
+        data.put("Date",date);
 
 
         db.collection("complaints").add(data).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
