@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,12 +50,20 @@ public class CreateComplaint extends AppCompatActivity {
         data.put("Subject",sub.getText().toString());
         data.put("Description",des.getText().toString());
         Toast.makeText(this, sub.getText().toString(), Toast.LENGTH_SHORT).show();
-        data.put("Feedback","");
+        data.put("Feedback","Not Specified");
         data.put("Image","url://");
         data.put("Priority","Not Specified");
         data.put("Status","Pending");
         data.put("Type","Not Specified");
 
+        //Getting current date and time
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        String time = simpleDateFormat.format(calendar.getTime());
+
+        data.put("Time",time);
+        data.put("Date",currentDate);
 
 
         db.collection("complaints").add(data).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -61,7 +72,9 @@ public class CreateComplaint extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     Toast.makeText(CreateComplaint.this, "Complaint Lodged successfully", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CreateComplaint.this,ListComplaints.class);
-                    intent.putExtra("Email",email);
+
+                    //Get user  from shared prefrences config
+                    //intent.putExtra("Email",email);
                     startActivity(intent);
                     finish();
                 }
@@ -75,7 +88,7 @@ public class CreateComplaint extends AppCompatActivity {
     public void clickImage(View view) {
         if(getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
+            //intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
         }
     }
 }

@@ -67,6 +67,7 @@ public class ListComplaints extends AppCompatActivity {
 
         //Array List of strings
         final ArrayList<String> subjects = new ArrayList<>();
+        final ArrayList<String> dates = new ArrayList<>();
 
 
         //Getting data from Firebase
@@ -82,10 +83,14 @@ public class ListComplaints extends AppCompatActivity {
                     //Working absolutely fine but after this for diaplaying taking too much time
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String subject = (String) document.get("Subject");
+                        String date = (String)document.get("Date");
+                        String time = (String)document.get("Time");
+                        String date_time = date + "   " + time;
                         subjects.add(subject);
+                        dates.add(date_time);
                     }
                     //Initializing Adapter
-                    mAdapter = new MyAdapter(ListComplaints.this, subjects);
+                    mAdapter = new MyAdapter(ListComplaints.this, subjects,dates);
                     recyclerView.setAdapter(mAdapter);
                 } else {
                     Toast.makeText(ListComplaints.this, "Failed to fetch Complaints", Toast.LENGTH_SHORT).show();

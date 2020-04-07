@@ -16,11 +16,13 @@ import java.util.zip.Inflater;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     ArrayList<String> cmplist;
+    ArrayList<String> dates;
     Context context;
 
-    public MyAdapter(Context context, ArrayList<String> cmplist) {
+    public MyAdapter(Context context, ArrayList<String> cmplist, ArrayList<String> dates) {
         this.context = context;
         this.cmplist = cmplist;
+        this.dates = dates;
     }
 
     @NonNull
@@ -36,6 +38,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
 
         holder.text_subject.setText(cmplist.get(position));
+        holder.text_date.setText(dates.get(position));
     }
 
     @Override
@@ -46,10 +49,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView text_subject;
+        TextView text_date;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             text_subject = (TextView) itemView.findViewById(R.id.text_subject_ii);
+            text_date = (TextView)itemView.findViewById(R.id.text_date_ii);
             itemView.setOnClickListener(this);
         }
 
