@@ -4,20 +4,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -26,13 +34,18 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.grpc.Context;
+
 public class CreateComplaint extends AppCompatActivity {
 
+    private ProgressBar progressBar;
     //Image purpose variables
     private static final int PICK_IMAGE = 1;
     private Uri mImageURI;
     private ImageView imageView;
 
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
 
     private FirebaseFirestore db;
     private EditText sub,des;
@@ -41,6 +54,9 @@ public class CreateComplaint extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        progressBar = findViewById(R.id.progressBar);
+
         setContentView(R.layout.activity_create_complaint);
         sub = (EditText)findViewById(R.id.text_subject_cc);
         des = (EditText)findViewById(R.id.text_description_cc);
@@ -49,6 +65,8 @@ public class CreateComplaint extends AppCompatActivity {
         email = intent.getStringExtra("Email");
         //Getting databse instance
         db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference("images");
 
         imageView = (ImageView)findViewById(R.id.imageView);
 
@@ -58,15 +76,19 @@ public class CreateComplaint extends AppCompatActivity {
     public void create(View view) {
 
 
+
         data.put("User",email);
         data.put("Subject",sub.getText().toString());
         data.put("Description",des.getText().toString());
-        Toast.makeText(this, sub.getText().toString(), Toast.LENGTH_SHORT).show();
         data.put("Feedback","Not Specified");
         data.put("Image","url://");
         data.put("Priority","Not Specified");
         data.put("Status","Pending");
         data.put("Type","Not Specified");
+
+        //Again Setting progress to zero
+        //progressBar.setProgress(0);
+
 
         //Getting current date and time
         Calendar calendar = Calendar.getInstance();
@@ -84,10 +106,22 @@ public class CreateComplaint extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 if(task.isSuccessful()) {
                     Toast.makeText(CreateComplaint.this, "Complaint Lodged successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CreateComplaint.this,ListComplaints.class);
+
+                    //Image Upload
+                    DocumentReference doc = task.getResult();
+                    StorageReference imageRef = storageReference.child((String)doc.getId() + "." + getImageExtension(mImageURI));
+                    imageRef.putFile(mImageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            if(task.isSuccessful()) {
+                                Toast.makeText(CreateComplaint.this, "Image Upload Successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
 
                     //Get user  from shared prefrences config
                     //intent.putExtra("Email",email);
+                    Intent intent = new Intent(CreateComplaint.this,ListComplaints.class);
                     startActivity(intent);
                     finish();
                 }
@@ -97,6 +131,15 @@ public class CreateComplaint extends AppCompatActivity {
             }
         });
     }
+
+
+    //Get Image extension
+    private String getImageExtension(Uri uri) {
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
 
     public void clickImage(View view) {
         openFileChooser();
