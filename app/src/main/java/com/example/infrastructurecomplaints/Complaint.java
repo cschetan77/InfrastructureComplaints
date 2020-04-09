@@ -79,10 +79,22 @@ public class Complaint extends AppCompatActivity {
 
     //Feedback
     public void feedback(View view) {
-        Intent intent = new Intent(this,Feedback.class);
-        intent.putExtra("ComplaintId",docId);
 
-        startActivity(intent);
+        String status = text_status.getText().toString();
+        if(status.equals("Pending")) {
+            Toast.makeText(this, "Complaint still pending", Toast.LENGTH_SHORT).show();
+        }
+        else if(status.equals("Approved")) {
+            Toast.makeText(this, "Complaint forwarded", Toast.LENGTH_SHORT).show();
+        }
+        else if(status.equals("Rejected")){
+            Toast.makeText(this, "Complaint Rejected", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Intent intent = new Intent(this,Feedback.class);
+            intent.putExtra("ComplaintId",docId);
+            startActivity(intent);
+        }
     }
 
 
