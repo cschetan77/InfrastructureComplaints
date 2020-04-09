@@ -1,20 +1,24 @@
 package com.example.infrastructurecomplaints;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,6 +27,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreateComplaint extends AppCompatActivity {
+
+    //Image purpose variables
+    private static final int PICK_IMAGE = 1;
+    private Uri mImageURI;
+    private ImageView imageView;
+
 
     private FirebaseFirestore db;
     private EditText sub,des;
@@ -39,6 +49,8 @@ public class CreateComplaint extends AppCompatActivity {
         email = intent.getStringExtra("Email");
         //Getting databse instance
         db = FirebaseFirestore.getInstance();
+
+        imageView = (ImageView)findViewById(R.id.imageView);
 
 
     }
@@ -87,9 +99,24 @@ public class CreateComplaint extends AppCompatActivity {
     }
 
     public void clickImage(View view) {
-        if(getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            //intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
+        openFileChooser();
+    }
+
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,PICK_IMAGE);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            mImageURI = data.getData();
+            Picasso.with(this).load(mImageURI).into(imageView);
         }
     }
 }

@@ -37,7 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
 
         holder.text_subject.setText(cmps.get(position).Subject);
-        holder.text_date.setText(cmps.get(position).Date + " " + cmps.get(position).Time);
+        holder.text_date.setText(cmps.get(position).Date + "    " + cmps.get(position).Time);
     }
 
     @Override
