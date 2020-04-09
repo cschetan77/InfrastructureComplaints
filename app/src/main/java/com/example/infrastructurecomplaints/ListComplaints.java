@@ -80,7 +80,7 @@ public class ListComplaints extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
 
-                    Toast.makeText(ListComplaints.this, "Fetching Successfull", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ListComplaints.this, "Fetching Successfull", Toast.LENGTH_SHORT).show();
 
                     //Working absolutely fine but after this for diaplaying taking too much time
                     for (QueryDocumentSnapshot document : task.getResult()) {

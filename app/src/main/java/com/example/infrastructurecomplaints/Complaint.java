@@ -51,7 +51,7 @@ public class Complaint extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()) {
-                    Toast.makeText(Complaint.this, "Query Successfull", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Complaint.this, "Query Successfull", Toast.LENGTH_SHORT).show();
 
                     DocumentSnapshot doc = task.getResult().getDocuments().get(0);
                     description = (String) doc.get("Description");
