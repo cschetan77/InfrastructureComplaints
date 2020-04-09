@@ -64,6 +64,7 @@ public class Complaint extends AppCompatActivity {
                     text_user.setText(user);
                     docId = doc.getId();
 
+
                 }
                 else {
                     Toast.makeText(Complaint.this, "Failed to fetch", Toast.LENGTH_SHORT).show();
@@ -87,6 +88,10 @@ public class Complaint extends AppCompatActivity {
 
     //Image display in seprate interface
     public void openImage(View view) {
+
+        Intent intent = new Intent(this,CmpImage.class);
+        intent.putExtra("ComplaintId",docId);
+        startActivity(intent);
 
 
     }
