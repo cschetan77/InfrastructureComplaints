@@ -48,9 +48,10 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()) {
-                    Toast.makeText(RegistrationActivity.this,"Account created successfully",Toast.LENGTH_SHORT);
+                    Toast.makeText(RegistrationActivity.this,"Account created successfully",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegistrationActivity.this,MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }
                 else {
                     Toast.makeText(RegistrationActivity.this,"Something Went worng",Toast.LENGTH_SHORT);
