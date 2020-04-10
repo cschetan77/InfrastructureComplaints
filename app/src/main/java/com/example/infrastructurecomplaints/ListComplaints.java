@@ -35,8 +35,6 @@ public class ListComplaints extends AppCompatActivity {
     String email;
     private FirebaseFirestore db;
 
-    //Making a list for complaints
-   // ArrayList<Complaints> cmplist = new ArrayList<Complaints>();
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter mAdapter;
