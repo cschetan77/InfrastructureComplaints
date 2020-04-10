@@ -11,11 +11,11 @@
         android:id="@+id/text_name"
         android:layout_width="353dp"
         android:layout_height="63dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
-        android:textColor="@color/White"
         android:hint="@string/text_name"
         android:inputType="textPersonName"
+        android:textColor="@color/White"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -64,11 +64,11 @@
         android:id="@+id/text_contact"
         android:layout_width="353dp"
         android:layout_height="63dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
         android:ems="10"
         android:hint="@string/text_contact"
-        android:textColor="@color/White"
         android:inputType="textPersonName"
+        android:textColor="@color/White"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_dob" />
@@ -86,6 +86,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.438"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_contact" />
+        app:layout_constraintTop_toBottomOf="@+id/text_contact"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
