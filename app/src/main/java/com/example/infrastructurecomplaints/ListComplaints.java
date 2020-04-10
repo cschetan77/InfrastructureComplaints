@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,13 +34,40 @@ import java.util.List;
 
 public class ListComplaints extends AppCompatActivity {
 
-
     String email;
     private FirebaseFirestore db;
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter mAdapter;
+
+
+    //Option Selection Listener
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.option_logout:
+                SharedPrefrencesConfig sharedPrefrencesConfig = new SharedPrefrencesConfig(getApplicationContext());
+                sharedPrefrencesConfig.writeLoginStatus(false);
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+
+    }
+
+    //OptionMenu Inflator
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout, menu);
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,18 +92,17 @@ public class ListComplaints extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         //Array List of Complaint Objects
         final ArrayList<CmpItem> cmps = new ArrayList<>();
 
 
-
         //Getting data from Firebase
         db = FirebaseFirestore.getInstance();
         CollectionReference complaints = db.collection("complaints");
-        complaints.whereEqualTo("User",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        complaints.whereEqualTo("User", email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -83,14 +112,14 @@ public class ListComplaints extends AppCompatActivity {
                     //Working absolutely fine but after this for diaplaying taking too much time
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String subject = (String) document.get("Subject");
-                        String date = (String)document.get("Date");
-                        String time = (String)document.get("Time");
-                        CmpItem cmp = new CmpItem(subject,date,time);
+                        String date = (String) document.get("Date");
+                        String time = (String) document.get("Time");
+                        CmpItem cmp = new CmpItem(subject, date, time);
                         cmps.add(cmp);
                     }
                     //Initializing Adapter
-                    Collections.sort(cmps,new cmpComparator());
-                    mAdapter = new MyAdapter(ListComplaints.this,cmps);
+                    Collections.sort(cmps, new cmpComparator());
+                    mAdapter = new MyAdapter(ListComplaints.this, cmps);
                     recyclerView.setAdapter(mAdapter);
                 } else {
                     Toast.makeText(ListComplaints.this, "Failed to fetch Complaints", Toast.LENGTH_SHORT).show();
