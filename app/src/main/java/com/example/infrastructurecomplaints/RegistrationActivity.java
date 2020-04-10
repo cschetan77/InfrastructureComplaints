@@ -36,6 +36,24 @@ public class RegistrationActivity extends AppCompatActivity {
         String dob = text_dob.getText().toString();
         String contact = text_contact.getText().toString();
 
+        if(text_name.getText().toString().isEmpty() || text_name.getText().toString().length()>32){
+            text_name.setError("Enter valid name:max length 32");
+        }
+        else if(text_email.getText().toString().length() == 0){
+            text_email.setError("Enter valid email");
+        }
+        else if(text_password.getText().toString().length()<=4)
+        {
+            text_password.setError("Enter valid password:min length 5");
+        }
+        else if(text_dob.getText().toString().isEmpty())
+        {
+            text_dob.setError("Enter valid DOB");
+        }
+        else if( text_contact.getText().toString().length()!=10)
+        {
+            text_contact.setError("Enter 10 digit number");
+        }
 
 
         Map<String,Object> user = new HashMap<>();
@@ -54,7 +72,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     finish();
                 }
                 else {
-                    Toast.makeText(RegistrationActivity.this,"Something Went worng",Toast.LENGTH_SHORT);
+                    Toast.makeText(RegistrationActivity.this,"Something Went worng",Toast.LENGTH_SHORT).show();
                 }
             }
         });
