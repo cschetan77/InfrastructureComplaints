@@ -59,6 +59,7 @@ public class RegistrationActivity extends AppCompatActivity {
             user.put("Password", password);
             user.put("Contact_No", contact);
             user.put("Birth_Date", dob);
+            user.put("Blocked","False");
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("users").document(email).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
