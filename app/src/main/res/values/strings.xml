@@ -5,7 +5,7 @@
 
     <string name="button_login">Login</string>
     <string name="button_signup">Sign Up</string>
-    <string name="text_signup">Don\'t have an account</string>
+    <string name="text_signup">Don\'t have an account ?</string>
     <string name="text_name">Name</string>
     <string name="text_newpassword">New Password</string>
     <string name="text_dob">DD-MM-YYYY</string>

@@ -47,8 +47,13 @@ public class MainActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()) {
                         //Record Exist and check for password
-                        Toast.makeText(MainActivity.this,"User found",Toast.LENGTH_SHORT).show();
-                        if(password.equals(document.get("Password"))) {
+
+                        if(document.get("Blocked").equals("True")) {
+                            Toast.makeText(MainActivity.this, "User Blocked", Toast.LENGTH_SHORT).show();
+                            text_email.setText("");
+                            text_password.setText("");
+                        }
+                        else if(password.equals(document.get("Password"))) {
                             //Correct password start Main Application
                             Toast.makeText(MainActivity.this,"User found and password matched",Toast.LENGTH_SHORT).show();
 
